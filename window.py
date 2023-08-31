@@ -1,4 +1,5 @@
 from tkinter import Tk, BOTH, Canvas
+import time
 
 
 class Window:
@@ -76,3 +77,57 @@ class Cell:
             p2 = Point(self._x2, self._y1)
             line = Line(p1, p2)
             self._win.draw_line(line, 'purple')
+
+    def draw_move(self, to_cell, undo=False):
+        p1 = Point(self._x1 + (self._x2 - self._x1)/2, self._y1 + (self._y2 - self._y1)/2)
+        p2 = Point(to_cell._x1 + (to_cell._x2 - to_cell._x1)/2, to_cell._y1 + (to_cell._y2 - to_cell._y1)/2)
+        line = Line(p1, p2)
+        if not undo:
+            color = 'red'
+        else:
+            color = 'gray'
+        self._win.draw_line(line, color)
+
+
+class maze:
+    def __init__(self,
+                 x1,
+                 y1,
+                 num_rows,
+                 num_cols,
+                 cell_size_x,
+                 cell_size_y,
+                 win,
+                 ):
+        self.x1 = x1
+        self.y1 = y1
+        self.num_rows = num_rows
+        self.num_cols = num_cols
+        self.cell_size_x = cell_size_x
+        self.cell_size_y = cell_size_y
+        self.win = win
+        self._create_cells()
+
+    def _create_cells(self):
+        self._cells = []
+        for col in self.num_cols:
+            col = []
+            for row in self.num_rows:
+                row = Cell()
+                col.append(row)
+            self._cells.append(col)
+        for i in range(len(self._cells)):
+            for j in range(len(self._cells[i])):
+                self._draw_cell(i, j)
+
+    def _draw_cell(self, i, j):
+        p1 = Point(self.x1 * i, self.y1 * j)
+        p2 = Point((self.x1 * i) + self.cell_size_x, (self.y1 * j) + self.cell_size_y)
+        cell = Cell(p1.x, p1.y, p2.x, p2.y, self.win)
+        cell.draw()
+        self._animate()
+
+    def _animate(self):
+        self.win.redraw()
+        time.sleep(0.05)
+
