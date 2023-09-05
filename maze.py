@@ -48,7 +48,7 @@ class Maze:
 
     def _animate(self):
         self.win.redraw()
-        time.sleep(0.03)
+        time.sleep(0.01)
 
     def break_walls_r(self, i, j):
         self._cells[i][j].visited = True
