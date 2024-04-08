@@ -1,3 +1,4 @@
-schema-version: v2.1
+schema-version: v2.2
 dd-service: flask-app
 team: infra
+type: web
