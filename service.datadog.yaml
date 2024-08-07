@@ -1,4 +1,4 @@
 schema-version: v2.2
 dd-service: flask-app
-team: infra
+team: sre-team
 type: web
